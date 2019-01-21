@@ -10,7 +10,8 @@
 ;
 
 ;   includes
-.INCLUDEPATH "/home/user/proj/avr/avra/" ; путь для подгрузки INC файлов
+; здесь надо подставить своё значение пути к файлам определений
+.includepath "/путь/для/подгрузки/INC/файлов/" ; 
 .INCLUDE "tn13def.inc"            ; загрузка предопределений для ATiny13
 .LIST                           ; включить генерацию листинга
 ; data segment  
