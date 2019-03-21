@@ -5,9 +5,11 @@ Small example work with Attiny13 on assembly
 
 1. Button.asm - работа порта ввода-вывода. Кнопка соединена с пином 4, светодиод с 3. 
 	При нажатии на кнопку состояние светодиода меняется.
+	
 	| схема | макет |
 	| --------- | --------- |
 	| ![Схема](https://github.com/andre-i/Attiny13_asm/blob/master/pict/Button_circuit.png) | ![макет](https://github.com/andre-i/Attiny13_asm/blob/master/pict/Button.png) |
+	
 2. SimplePWM.asm - программый шим. Присоединённый к пину светодиод светит с некоторым промежуточным значением.
 	![SimplePWM](https://github.com/andre-i/Attiny13_asm/blob/master/pict/SimplePWM.png) 
 3. WD_interrupt - прерывания от ватчдога(WD) . В обработчике прерываний меняется состояние присоединённых к пинам 3 и 4 светодиодов.
