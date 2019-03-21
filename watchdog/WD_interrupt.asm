@@ -8,10 +8,14 @@
 
 
 ;   includes
-.includepath "/home/user/proj/avr/avra/" ; путь для подгрузки INC файлов
-.include "tn13def.inc"            ; загрузка предопределений для ATiny13
-.list                           ; включить генерацию листинга
+;.INCLUDEPATH "/путь/для/подгрузки/INC/файлов"
+.INCLUDEPATH "/some/proj/avr/avra"
+.INCLUDE "tn13def.inc"            ; загрузка предопределений для ATiny13
+.LIST                           ; включить генерацию листинга
 ;
+
+;  определения
+.def invert=r0
 
 ; data segment  
 ; --------------------------------------------------
@@ -22,7 +26,6 @@
 ; --------------------------------------------------
 .cseg
 ;  -----  векторы прерываний  -----------
-;
 ; by default - RESET
 rjmp RESET ; Reset Handler
 rjmp RESET ; EXT_INT0 ; IRQ0 Handler
@@ -35,6 +38,19 @@ rjmp RESET ; TIM0_COMPB ; Timer0 CompareB Handler
 rjmp WATCHDOG ; Watchdog Interrupt Handler
 rjmp RESET ; ADC ; ADC Conversion Handler
 
+;-------------------  INTR HANDLERS  ------------------------------
+
+;обработчик прерываний по WD
+; при каждом обращении инвертирует состояние светодиодов
+WATCHDOG:
+	push r16
+	in r16,PORTB; прочитали состояние
+	eor r16,invert ; инвертировали его
+	out PORTB,r16 ; записали обратно в порт
+	pop r16
+reti
+
+
 
 RESET:
 ; -- инициализация стека --
@@ -42,7 +58,7 @@ RESET:
 ldi r16, Low(RAMEND)  ; младший байт конечного адреса ОЗУ в R16
 out SPL, r16          ; установка младшего байта указателя стека
 
-; ---  настройка
+;---------------------  INIT  ------------------------------------------
 cli
 
 ;  периферия
@@ -55,39 +71,28 @@ ldi r16,(1<<PORTB3)
 out PORTB,r16
 
 ; ватчдог
-; MCUSR регистр состояния контроллера
-
 ; WDTCR - таймер ватчдога
-; WDTIE - прерывания по таймеру WD разрешены, WDE=0 - запрет на сброс по WD, WDP[0-3] - настройка таймера WD
-ldi r16, (1<<WDTIE) | (0<<WDE) | (WDP2<<1) | (1<<WDP1) ; таймер WD ~  1сек
+; WDTIE - прерывания по таймеру WD разрешены,
+;	 WDE=0 - запрет на сброс по WD, WDP[0-3] - настройка таймера WD
+; таймер WD ~  1сек
+ldi r16, (1<<WDTIE) | (0<<WDE) | (WDP2<<1) | (1<<WDP1) 
 out WDTCR,r16
 
 ; стартовые значения
 ; для инверсии мигалки
-.def invert=r0
 ldi r16,0b00011000
 mov r0,r16
 
 sei
 ; настройка окончена
 
+;-----------------------  MAIN  ---------------------------------------
 
 MAIN:
 	;here must be some useful action
 	nop
 	nop
 rjmp MAIN	
-
-
-;обработчик прерываний по WD
-; при каждом обращении инвертирует состояние светодиодов
-WATCHDOG:
-	push r16
-	in r16,PORTB; прочитали состояние
-	eor r16,invert ; инвертировали его
-	out PORTB,r16 ; записали обратно в порт
-	pop r16
-reti
 
 
 ;  EEPROM segment

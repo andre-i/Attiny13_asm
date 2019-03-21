@@ -16,6 +16,16 @@
 .list                           ; включить генерацию листинга
 ;
 
+;  definions
+; счётчики для формирования задержки
+.def counter=r0
+.def counter1=r1
+; флаговый регистр нужен для установки состояния пина светодиода
+.def flags=r25
+.equ LOW_FLAG=1
+.equ LOW_FLAG_BIT=0
+
+
 ; data segment  
 ; --------------------------------------------------
 .dseg 
@@ -44,30 +54,25 @@ RESET:
 ldi r16, Low(RAMEND)  ; младший байт конечного адреса ОЗУ в R16
 out SPL, r16          ; установка младшего байта указателя стека
 
-; ---  настройка
 cli
+; --- 
+;------------  INIT --------------------
 
 ; PORTS
-; portb4 - button, portb3 - led
+; PORTB4 - button, PORTB3 - led
 ldi r16, (1<<PORTB3) | (1<<PORTB4) ; 3 пин - высокое состояние, 4 подтянут к "+"
 out PORTB, r16
 ldi r16, (1<<DDB3) | (0<<DDB4) ; 3 пин - вывод. 4 - ввод
 out DDRB, r16
 
-;------------  INIT --------------------
-; счётчики для формирования задержки
-.def counter=r0
-.def counter1=r1
+; счётчик
 ldi r16,5
-mov r1, r16
-; флаговый регистр нужен для установки состояния пина светодиода
-.def flags=r25
-.equ LOW_FLAG=1
-.equ LOW_FLAG_BIT=0
+mov counter1, r16
+; флаги
 sbr flags,LOW_FLAG
 
 sei
-; настройка окончена
+;-----------  end INIT  -----------------
 
 MAIN:
 	rcall DELAY

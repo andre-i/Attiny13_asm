@@ -13,8 +13,8 @@
 
 ;   includes
 ; подставить свой путь для подгрузки INC файлов 
-.includepath "/home/user/proj/avr/avra/" 
-.include "tn13def.inc"            ; загрузка предопределений для ATiny13
+;.includepath "/home/user/proj/avr/avra/" 
+;.include "tn13def.inc"            ; загрузка предопределений для ATiny13
 .list                          			   ; включить генерацию листинга
 ;
 
@@ -151,7 +151,7 @@ SET_WDT:
 	wdr 
 	; WDTCR - таймер ватчдога
 	in r16, WDTCR
-	; разрешени е на модификацию и режим сброса
+	; разрешение на модификацию и режим сброса
 	; вводится для исключения случайностей( см. даташит)
 	ori r16, (1<<WDCE) | (1<<WDE) 
 	out WDTCR, r16

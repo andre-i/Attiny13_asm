@@ -1,23 +1,28 @@
 ;    -------------------------    создано для ATTINY13   -------------------------------------------------------------------------------
-;	прошивка через USBASP : avrdude -p t13 -c usbasp -P usb -U flash:w:FILE_NAME.hex
-;   прошивка через ARDUINO( UNO, NANO )  : avrdude -p t13  -c avrisp -b 19200 -P /dev/ttyUSB0  -U flash:w:FILE_NAME.hex
+;	прошивка через USBASP :
+;			avrdude -p t13 -c usbasp -P usb -U flash:w:FILE_NAME.hex
+;   прошивка через ARDUINO( UNO, NANO )  :
+;			avrdude -p t13  -c avrisp -b 19200 -P /dev/ttyUSB0  -U flash:w:FILE_NAME.hex
 
 ;  ==================================================================
 ;  ======================  работа с EEPROM: Запись и чтение  ====================
 ;  ==================================================================
-;     яркость светодиода на 0 пине управляется ШИМ 
 
-;   Программа изменения яркости светодиода нажатием кнопки. 
-; Одна кнопка используется и для изменения, и для сохранения значения яркости 
-; светодиода, храним данные в EEPROM
+
+; При старте или перезагрузке значение яркости светодиода берётся из EEPROM 
+; Одна кнопка используется и для изменения, и для сохранения значения  
+; яркости светодиода, храним данные в EEPROM
 ; Короткие нажатия на кнопку меняют яркость, а длинные приводят к
 ; записи текущего значения.
+; 
+;     яркость светодиода на 0 пине управляется ШИМ 
 
-
-
+; загрузка определений для ATiny13
 ; здесь надо подставить своё значение пути к файлам определений
-.INCLUDEPATH "/путь/для/подгрузки/INC/файлов/" ; 
-.INCLUDE "tn13def.inc"            ; загрузка предопределений для ATiny13
+; для комппиляции в "avra" раскомментировать строки ниже и подставить
+; свои значения. Для компиляции в avr studio не трогать
+;.INCLUDEPATH "/путь/для/подгрузки/INC/файлов/" ; 
+;.INCLUDE "tn13def.inc"            
 .LIST                           ; включить генерацию листинга
 ;
 
@@ -181,33 +186,26 @@ ADD_SHIFT:
 
 ;задержка для уточнения состояния кнопки
 DELAY:
-	dec counter0
-	brne DELAY	
-	dec counter1
-	brne delay
-	ldi r16,30
+	push r16
+	subi counter0,1
+	sbci counter1,0
+	brne DELAY
+	ldi r16,60
 	mov counter1,r16
+	pop r16
 ret	
 	
 ; мигание светодиода на 3 пине
 BLINK:	; серия миганий при записи в EEPROM
+	ldi r16, 4
 	sbi PORTB,PORTB3
 	rcall DELAY
-	rcall DELAY
-	cbi PORTB,PORTB3
-	rcall DELAY
-	rcall DELAY
-	sbi PORTB,PORTB3
-	rcall DELAY
-	rcall DELAY
-	cbi PORTB,PORTB3
-	rcall DELAY
-	rcall DELAY
+	dec r16
+	brne BLINK
 SMALL_BLINK:  ; мигнуть при изменении яркости
 	cbi PORTB,PORTB3
 	rcall DELAY
 	sbi PORTB,PORTB3
-	rcall DELAY
 	rcall DELAY
 ret
 
