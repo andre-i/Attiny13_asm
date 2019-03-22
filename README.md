@@ -38,7 +38,7 @@ Small example work with Attiny13 on assembly
 	
 	| схема | макет |
 	| --------- | --------- |
-	|![WD_intr](https://github.com/andre-i/Attiny13_asm/blob/master/pict/WD_interrupt.png)|![WD_intr](https://github.com/andre-i/Attiny13_asm/blob/master/pict/WDmack.png)|
+	|![WD_intr](https://github.com/andre-i/Attiny13_asm/blob/master/pict/WD_interrupt.png)|![WD_intr](https://github.com/andre-i/Attiny13_asm/blob/master/pict/WD_mack.png)|
 	
 5. WDwakeUP.asm - Работа ватчдога. Запускаем таймер ватчдога и отправляем контроллер в состяние сна. По истечении работы таймера контроллер выходит из этого состояния.
 	
@@ -50,7 +50,7 @@ Small example work with Attiny13 on assembly
 	
 	| схема | макет |
 	| --------- | --------- |
-	|![EEPROM](https://github.com/andre-i/Attiny13_asm/blob/master/pict/EEPROM.png)| ![EEPROM](https://github.com/andre-i/Attiny13_asm/blob/master/pict/EEPROM_mack.png)| 
+	|![EEPROM](https://github.com/andre-i/Attiny13_asm/blob/master/pict/EEPROM.png)| ![EEPROM](https://github.com/andre-i/Attiny13_asm/blob/master/pict/EEPROMmack.png)| 
 7. DS18B20_thermometer - измерение температуры датчиком DS18B20. Количество ножек контроллера не позволяет подключить 
 дисплей. Для индикации используются два диода: красный(tens_led_pin) для десятков и зелёный(ones_led_pin) для единиц. Количество блинков соответствует количеству десятков и единиц. Температура измеряется в градусах по Цельсию. Файл 1-wireProto.asm содержит подпрограммы работы с шиной "one wire"  на уровне протокола( сигнал сброса, чтение и запись байта , проверка crc отсутствует).
 	
