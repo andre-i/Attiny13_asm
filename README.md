@@ -10,8 +10,10 @@ Small example work with Attiny13 on assembly
 	| --------- | --------- |
 	| ![Схема](https://github.com/andre-i/Attiny13_asm/blob/master/pict/Button_circuit.png) | ![макет](https://github.com/andre-i/Attiny13_asm/blob/master/pict/Button.png) |
 	
-2. SimplePWM.asm - программый шим. Присоединённый к пину светодиод светит с некоторым промежуточным значением.   
-	![SimplePWM](https://github.com/andre-i/Attiny13_asm/blob/master/pict/SimplePWM.png) 
+2. SimplePWM.asm - программый шим. Присоединённый к пину светодиод светит с некоторым промежуточным значением.
+	![SimplePWM](https://github.com/andre-i/Attiny13_asm/blob/master/pict/simplePWM.png)
+3. TunePWM.asm -  управляем ШИМ кнопкой. При нажатии на кнопку яркость светодиода плавно изменяется. 
+	![SimplePWM](https://github.com/andre-i/Attiny13_asm/blob/master/pict/tunePWM.png)	
 3. WD_interrupt - прерывания от ватчдога(WD) . В обработчике прерываний меняется состояние присоединённых к пинам 3 и 4 светодиодов.  
 	![WD_intr](https://github.com/andre-i/Attiny13_asm/blob/master/pict/WD_interrupt.png)
 4. WDwakeUP.asm - Работа ватчдога. Запускаем таймер ватчдога и отправляем контроллер в состяние сна. По истечении работы таймера контроллер выходит из этого состояния.
