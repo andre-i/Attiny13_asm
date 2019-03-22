@@ -5,8 +5,8 @@
 
 
 ;   includes must be uncomment for "avra" compilation
-.INCLUDEPATH "/some/proj/avr/avra" ; путь для подгрузки INC файлов
-.INCLUDE "tn13def.inc"            ; загрузка предопределений для ATiny13
+;.INCLUDEPATH "/some/proj/avr/avra" ; путь для подгрузки INC файлов
+;.INCLUDE "tn13def.inc"            ; загрузка предопределений для ATiny13
 .LIST                           ; включить генерацию листинга
 ;
 
