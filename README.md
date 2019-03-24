@@ -56,6 +56,6 @@ Small example work with Attiny13 on assembly
 	
 	| схема | макет |
 	| --------- | --------- |
-	|![DS18B20_thermometer](https://github.com/andre-i/Attiny13_asm/blob/master/pict/DS18B20_thermometer.png)| ???|
+	|![DS18B20_thermometer](https://github.com/andre-i/Attiny13_asm/blob/master/pict/DS18B20_thermometer.png)| ![DS18B20_thermometer](https://github.com/andre-i/Attiny13_asm/blob/master/pict/DS18B20_thermometer_mack.png)|
 	
 
